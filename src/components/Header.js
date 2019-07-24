@@ -5,8 +5,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import Link from '@material-ui/core/Link';
 import SearchIcon from '@material-ui/icons/Search';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -37,6 +37,7 @@ const useStyles = makeStyles(theme => ({
     marginTop: theme.spacing(1),
     flexShrink: 0,
     textDecoration: "none",
+    color: 'black',
     borderTop: '3px solid transparent',
     '&:hover':{
       borderTop: '3px solid #e94155',
@@ -80,16 +81,17 @@ export default function DenseAppBar() {
 
         <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
          {sections.map(section => (
-           <Link
+           <RouterLink
+            to ={{pathname:`/subjectresults/${section}`}}
              color="textPrimary"
              noWrap
              key={section}
              variant="body2"
              href="#"
              className={classes.toolbarLink}
-           >
+            >
              {section}
-           </Link>
+           </RouterLink>
          ))}
        </Toolbar>
 

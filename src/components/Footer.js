@@ -2,7 +2,6 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
 
@@ -25,7 +24,6 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    paddingRight: 70,
     width: "100%",
   },
   fab: {
@@ -67,7 +65,7 @@ const useStyles = makeStyles(theme => ({
     flexDirection: 'row',
   },
   footerP: {
-    fontSize: 30,
+    fontSize: 26,
     color: "white",
     fontWeight: '400',
     display: "inline-block",
@@ -76,7 +74,7 @@ const useStyles = makeStyles(theme => ({
     paddingRight: theme.spacing(1),
   },
   footerPsm: {
-    fontSize: 30,
+    fontSize: 26,
     color: "white",
     textTransform:  "uppercase",
     paddingLeft: theme.spacing(1),
@@ -121,19 +119,19 @@ export default function BottomFooter() {
          </Typography>
 
          <div>
-         <Fab variant="outlined" aria-label="Edit" className={classes.fabSocial}>
+         <Fab variant="round" aria-label="Edit" className={classes.fabSocial}>
           <i className="fab fa-twitter fabColor"></i>
          </Fab>
 
-         <Fab variant="outlined" aria-label="Edit" className={classes.fabSocial}>
+         <Fab variant="round" aria-label="Edit" className={classes.fabSocial}>
           <i className="fab fa-instagram fabColor"></i>
          </Fab>
 
-         <Fab  variant="outlined" aria-label="Edit" className={classes.fabSocial}>
+         <Fab  variant="round" aria-label="Edit" className={classes.fabSocial}>
             <i className="fas fa-envelope fabColor"></i>
          </Fab>
 
-         <Fab variant="outlined" aria-label="Edit" className={classes.fabSocial}>
+         <Fab variant="round" aria-label="Edit" className={classes.fabSocial}>
             <i className="fab fa-facebook-f fabColor"></i>
          </Fab>
          </div>

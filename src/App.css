@@ -309,14 +309,14 @@ h3 {
 
 .slick-next {
   position: absolute;
-  right: -5%;
+  right: -10%;
   bottom: 35%;
   color: black;
 }
 
 .slick-prev {
   position: absolute;
-  left: -5%;
+  left: -10%;
   bottom: 35%;
   color: black;
 }
@@ -328,6 +328,19 @@ h3 {
 .button:hover {
   background-color: transparent;
   outline: none;
+}
+
+.button:focus {
+  background-color: transparent;
+  outline: none;
+}
+
+.controlNext:hover {
+  color: #E91E63;
+}
+
+.controlPrev:hover {
+  color: #E91E63;
 }
 
 @-webkit-keyframes bounce {

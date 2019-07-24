@@ -1,22 +1,22 @@
-import React from 'react';
-import Typography from '@material-ui/core/Typography';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
+import { Link as RouterLink } from 'react-router-dom';
+
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
+import Fab from '@material-ui/core/Fab';
+import Icon from '@material-ui/core/Icon';
 import Image from '../images/yellow.png';
-import TextField from '@material-ui/core/TextField';
-import ReactDOM from 'react-dom'
-import Slider from "react-slick";
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import Button from '@material-ui/core/Button';
-import Fab from '@material-ui/core/Fab';
 import NavigationIcon from '@material-ui/icons/Navigation';
-import Icon from '@material-ui/core/Icon';
+import Slider from "react-slick";
 import SliderArrowNext from '../global/SliderArrowNext.js';
 import SliderArrowPrev from '../global/SliderArrowPrev.js';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+
 
 
 const useStyles = makeStyles(theme => ({
@@ -54,20 +54,25 @@ const useStyles = makeStyles(theme => ({
     width: '90%',
   },
   card: {
-    maxWidth: 200,
+    width: 200,
+    maxWidth: 230,
+    height: 400,
   },
   media: {
-    height: 160,
+    height: 300,
   },
   fab: {
     backgroundColor: 'white',
     height: 40,
     marginTop: 20,
   },
+  fabLink:{
+    textDecoration: "none",
+  },
   down: {
     fontSize: 50,
     color: '#000000',
-    marginBottom: 40,
+    marginBottom: 50,
     marginTop: 20,
     animation: 'bounce 2s infinite ease-in-out;'
   },
@@ -77,7 +82,15 @@ const useStyles = makeStyles(theme => ({
   },
   slider: {
     marginTop: 50,
-    width: "75%",
+    width: "80%",
+  },
+  link: {
+    textDecoration: "none",
+    color: 'black',
+    '&:hover':{
+      color: '#e94155',
+      textDecoration: "underline",
+    },
   }
 }))
 
@@ -96,10 +109,34 @@ export default function Title() {
     to="next"/>
   };
 
+const [books, setBooks] = useState([]);
+const [booksFantasy, setBooksFantasy] = useState([]);
+const [booksScience, setBooksScience] = useState([]);
+const [value, setValue] = React.useState("");
+
+let index = 0;
+
+useEffect(()=> {
+  axios.get ('https://cors-anywhere.herokuapp.com/openlibrary.org/subjects/romance.json?details=true&limit=10')
+  .then(response => {
+    setBooks(response.data.works);
+  });
+  axios.get ('https://cors-anywhere.herokuapp.com/openlibrary.org/subjects/fantasy.json?details=true&limit=10')
+  .then(response => {
+    setBooksFantasy(response.data.works);
+  });
+
+  axios.get ('https://cors-anywhere.herokuapp.com/openlibrary.org/subjects/science.json?details=true&limit=10')
+  .then(response => {
+    setBooksScience(response.data.works);
+    console.log(response.data.works);
+  });
+}, [])
+
   return (
     <main>
       <div className={classes.title}>
-        <Typography variant="h1" color="inherit" className={classes.mainTitle}>
+        <Typography variant="h1" color='secondary' className={classes.mainTitle} >
           BamBooks
         </Typography>
       </div>
@@ -116,15 +153,21 @@ export default function Title() {
         placeholder="Please, enter the name"
         fullWidth
         margin="normal"
+        value={value}
+        onChange={(e, newValue) => {
+        setValue(e.target.value);
+      }}
         InputLabelProps={{
           shrink: true,
         }}
       />
 
+      <RouterLink to ={{pathname:`/searchresults/${value}`}} className={classes.fabLink}>
       <Fab variant="extended" aria-label="Delete" className={classes.fab}>
-        <NavigationIcon className={classes.extendedIcon} />
+        <NavigationIcon className={classes.extendedIcon}/>
         Search
       </Fab>
+      </RouterLink>
       </div>
 
       <div>
@@ -134,129 +177,84 @@ export default function Title() {
 
       <div>
       <Typography variant="h2" component="h4">
-        Popular books
+        Romantic
       </Typography>
 
       <Slider {...settings} className={classes.slider}>
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
 
-        <Card className={classes.card}>
+       {books.map(i => (
+        <Card className={classes.card} key={i.lending_edition}>
+        <RouterLink to ={{pathname:`/books/${i.lending_edition}`}} className={classes.link}>
           <CardActionArea>
             <CardMedia
               className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
+              image={'http://covers.openlibrary.org/b/id/'+i.cover_id+'-L.jpg'}
               title="Contemplative Reptile"
             />
           </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
+          <CardContent>
+          <Typography gutterBottom variant="subtitle2" component="h2">
+            {i.title}
+          </Typography>
+          </CardContent>
+        </RouterLink>
         </Card>
+        ))}
+    </Slider>
+</div>
+    <div>
+    <Typography variant="h2" component="h4">
+      Fantasy
+    </Typography>
 
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
+    <Slider {...settings} className={classes.slider}>
 
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
+     {booksFantasy.map(i => (
+      <Card className={classes.card} key={i.openlibrary_edition}>
+      <RouterLink to ={{pathname:`/books/${i.openlibrary_edition}`}} className={classes.link}>
+        <CardActionArea>
+          <CardMedia
+            className={classes.media}
+            image={'http://covers.openlibrary.org/b/id/'+i.cover_id+'-L.jpg'}
+            title="Contemplative Reptile"
+          />
+        </CardActionArea>
+        <CardContent>
+        <Typography gutterBottom variant="subtitle2" component="h2">
+          {i.title}
+        </Typography>
+        </CardContent>
+      </RouterLink>
+      </Card>
+      ))}
+  </Slider>
+</div>
 
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
+  <div>
+  <Typography variant="h2" component="h4">
+    Science
+  </Typography>
 
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
+  <Slider {...settings} className={classes.slider}>
 
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
-
-        <Card className={classes.card}>
-          <CardActionArea>
-            <CardMedia
-              className={classes.media}
-              image="/static/images/cards/contemplative-reptile.jpg"
-              title="Contemplative Reptile"
-            />
-          </CardActionArea>
-          <CardActions>
-            <Button size="small" color="primary">
-              Learn More
-            </Button>
-          </CardActions>
-        </Card>
+   {booksScience.map(i => (
+    <Card className={classes.card} key={i.openlibrary_edition}>
+    <RouterLink to ={{pathname:`/books/${i.openlibrary_edition}`}} className={classes.link}>
+      <CardActionArea>
+        <CardMedia
+          className={classes.media}
+          image={'http://covers.openlibrary.org/b/id/'+i.cover_id+'-L.jpg'}
+          title="Contemplative Reptile"
+        />
+      </CardActionArea>
+      <CardContent>
+      <Typography gutterBottom variant="subtitle2" component="h2">
+        {i.title}
+      </Typography>
+      </CardContent>
+    </RouterLink>
+    </Card>
+    ))}
     </Slider>
     </div>
 </main>
