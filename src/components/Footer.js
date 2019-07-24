@@ -119,19 +119,19 @@ export default function BottomFooter() {
          </Typography>
 
          <div>
-         <Fab variant="round" aria-label="Edit" className={classes.fabSocial}>
+         <Fab variant="round" size="small" aria-label="Edit" className={classes.fabSocial}>
           <i className="fab fa-twitter fabColor"></i>
          </Fab>
 
-         <Fab variant="round" aria-label="Edit" className={classes.fabSocial}>
+         <Fab variant="round" size="small" aria-label="Edit" className={classes.fabSocial}>
           <i className="fab fa-instagram fabColor"></i>
          </Fab>
 
-         <Fab  variant="round" aria-label="Edit" className={classes.fabSocial}>
+         <Fab  variant="round" size="small" aria-label="Edit" className={classes.fabSocial}>
             <i className="fas fa-envelope fabColor"></i>
          </Fab>
 
-         <Fab variant="round" aria-label="Edit" className={classes.fabSocial}>
+         <Fab variant="round" size="small" aria-label="Edit" className={classes.fabSocial}>
             <i className="fab fa-facebook-f fabColor"></i>
          </Fab>
          </div>

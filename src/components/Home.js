@@ -114,7 +114,6 @@ const [booksFantasy, setBooksFantasy] = useState([]);
 const [booksScience, setBooksScience] = useState([]);
 const [value, setValue] = React.useState("");
 
-let index = 0;
 
 useEffect(()=> {
   axios.get ('https://cors-anywhere.herokuapp.com/openlibrary.org/subjects/romance.json?details=true&limit=10')
@@ -129,7 +128,6 @@ useEffect(()=> {
   axios.get ('https://cors-anywhere.herokuapp.com/openlibrary.org/subjects/science.json?details=true&limit=10')
   .then(response => {
     setBooksScience(response.data.works);
-    console.log(response.data.works);
   });
 }, [])
 
@@ -154,6 +152,7 @@ useEffect(()=> {
         fullWidth
         margin="normal"
         value={value}
+        autoComplete ="off"
         onChange={(e, newValue) => {
         setValue(e.target.value);
       }}

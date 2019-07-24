@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import {BrowserRouter as Router, Route}  from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch}  from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
 import Link from '@material-ui/core/Link';
@@ -160,12 +160,13 @@ export default function LinkRouter() {
       </IconButton>
       </AppBar>
 
-
+      <Switch>
         <Route exact path="/" component={Home}/>
         <Route exact path="/home" component={Home}/>
         <Route path ='/books/:id' component={Books}/>
         <Route path ='/searchresults/:id' component={SearchResults}/>
         <Route path ='/subjectresults/:id' component={SubjectResults}/>
+      </Switch>
         <Footer/>
       </div>
     </Router>

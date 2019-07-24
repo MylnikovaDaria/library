@@ -4,14 +4,11 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-
-import CardActionArea from '@material-ui/core/CardActionArea';
 import Image from '../images/book_placeholder.png';
-
+import Typography from '@material-ui/core/Typography';
 
 const useStyles = makeStyles(theme => ({
   cards: {
@@ -52,7 +49,6 @@ export default function Seacrh({match}) {
     axios.get ('https://cors-anywhere.herokuapp.com/openlibrary.org/search.json?title='+ term)
     .then(response => {
       setBooks(response.data.docs);
-      console.log(response.data.docs);
   })}, [])
 
 
